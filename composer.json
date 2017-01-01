@@ -8,16 +8,11 @@
             "name": "Spaceboy"
         }
     ],
-    "keywords": ["spaceboy", "nette", "space-tools"],
+    "keywords": ["spaceboy", "nette", "latte", "google", "charts"],
     "require": {
         "php": ">= 5.3",
         "nette/application": ">=2.0.0",
         "latte/latte": ">=2.0.0",
         "spaceboy/space-tools": "dev-master"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.1.x"
-        }
     }
 }
