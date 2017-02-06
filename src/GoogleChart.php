@@ -156,7 +156,7 @@ abstract class GoogleChart extends \Nette\Object {
 
     /**
      * Returns input values as flat array; checks size
-     * @params array of mixed
+     * @param array of mixed
      * @return array
      * @throws Exception
      */
