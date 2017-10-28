@@ -9,6 +9,9 @@
         }
     ],
     "keywords": ["spaceboy", "nette", "latte", "google", "charts"],
+    "autoload": {
+        "classmap": ["src"]
+    },
     "require": {
         "php": ">= 5.3",
         "nette/application": ">=2.0.0",
