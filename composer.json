@@ -8,7 +8,7 @@
             "name": "Spaceboy"
         }
     ],
-    "keywords": ["spaceboy", "nette", "latte", "google", "charts"],
+    "keywords": ["spaceboy", "nette", "latte", "google", "charts", "php"],
     "autoload": {
         "classmap": ["src"]
     },
