@@ -1,0 +1,7 @@
+<div id="{$id}" style="{$chart->getStyle()|noescape}"></div>
+<script type="text/javascript">
+    google.charts.setOnLoadCallback(function () {
+        var chart = new google.visualization.{$type|noescape}(document.getElementById({$id}));
+        chart.draw(google.visualization.arrayToDataTable({$chart->getData()|noescape}), {$chart->getOptions()|noescape});
+    });
+</script>

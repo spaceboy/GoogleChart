@@ -1,8 +1,9 @@
 <?php
 
-namespace Spaceboy;
+namespace Spaceboy\GoogleCharts;
 
 use Spaceboy\SpaceTools;
+use Latte;
 
 abstract class GoogleChart extends \Nette\Object {
 
@@ -10,25 +11,30 @@ abstract class GoogleChart extends \Nette\Object {
 
 
     /** @var string */
-    protected $style    = ''; //width: 900px; height: 500px;';
+    protected   $style          = ''; //width: 900px; height: 500px;';
 
     /** @var array */
-    protected $options  = [
+    protected   $options        = [
         'title' => 'My chart',
     ];
 
     /** @var array */
-    protected $data     = [];
+    protected   $data           = [];
 
     /** @var array */
-    protected $columnNames = ['title', 'amount'];
+    protected   $columnNames    = ['title', 'amount'];
 
     /** @var array */
-    protected $roles    = [];
+    protected   $roles          = [];
 
     /** @var integer */
-    protected $dataLength;
+    protected   $dataLength;
 
+    /** @var string */
+    protected   $id;
+
+    /** @var string */
+    protected   $chartType;
 
     /**
      * Adds data
@@ -148,12 +154,6 @@ abstract class GoogleChart extends \Nette\Object {
         return $this;
     }
 
-
-
-    public function __construct () {
-        $this->dataLength   = static::DATA_LENGTH;
-    }
-
     /**
      * Returns input values as flat array; checks size
      * @param array of mixed
@@ -166,6 +166,79 @@ abstract class GoogleChart extends \Nette\Object {
             throw new \Exception("Data error: {$this->dataLength} (+{$roleSize}) items expected, {$size} received.");
         }
         return $row;
+    }
+
+    /**
+     * Returns HTML ID of chart
+     * @return string
+     */
+    public function getId () {
+        return $this->id;
+    }
+
+    /**
+     * Sets HTML ID of chart
+     * @param string id
+     * @return Spaceboy\GoogleChart
+     */
+    public function setId ($id) {
+        $this->id   = $id;
+        return $this;
+    }
+
+    /**
+     * Returns Title of chart
+     * @return string
+     */
+    public function getTitle () {
+        return $this->options['title'];
+    }
+
+    /**
+     * Sets HTML ID of chart
+     * @param string title
+     * @return Spaceboy\GoogleChart
+     */
+    public function setTitle ($title) {
+        $this->options['title'] = $title;
+        return $this;
+    }
+
+    /**
+     * Returns HTML code of GoogleChart API
+     * @return string
+     */
+    public function insertApi () {
+        return file_get_contents(__DIR__ . '/templates/chart-api.latte');
+    }
+
+    /**
+     * Returns HTML code of GoogleChart
+     * @return string
+     */
+    public function insertChart () {
+        $latte  = new Latte\Engine;
+        return $latte->renderToString(__DIR__ . '/templates/chart.latte', [
+            'id'    => $this->id,
+            'type'  => $this->chartType,
+            'chart' => $this,
+        ]);
+    }
+
+    /**
+     * Constructor of GoogleChart
+     * @param string HTML ID
+     * @param string GoogleChart type
+     */
+    public function __construct ($id = NULL, $type = NULL) {
+        if (is_null($type)) {
+            $cName  = explode('\\', get_class($this));
+            $this->chartType   = array_pop($cName);
+        } else {
+            $this->chartType   = $type;
+        }
+        $this->dataLength   = static::DATA_LENGTH;
+        $this->id           = ($id ?: uniqid('chart-'));
     }
 
 }
