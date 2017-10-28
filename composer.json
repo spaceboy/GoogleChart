@@ -13,6 +13,6 @@
         "php": ">= 5.3",
         "nette/application": ">=2.0.0",
         "latte/latte": ">=2.0.0",
-        "spaceboy/space-tools": "dev-master"
+        "spaceboy/space-tools": ">=0.1.0"
     }
 }
